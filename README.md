@@ -8,7 +8,7 @@
 
 Here are the daily challenges for Advent of Code 2024:
 
-* 🎁 Day 1: [challenge]("./01/README.md") [solution]("./01/solution.cc") ⭐⭐
+* 🎁 Day 1: [challenge](./01/README.md) [solution](./01/solution.cc) ⭐⭐
 * 🎁 Day 2: TBD
 * 🎁 Day 3: TBD
 * ...
