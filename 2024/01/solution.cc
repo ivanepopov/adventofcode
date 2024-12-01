@@ -33,11 +33,17 @@ int main()
         distance += abs(leftValues[i] - rightValues[i]);
     }
 
+    int similarity = 0;
+    int maxSize = std::max(leftValues[leftValues.size()-1], rightValues[rightValues.size()-1]);
+    std::vector<int> mp(maxSize, 0);
+    for (int& val : rightValues) mp[val]++;
+    for (int& val : leftValues) similarity += (val * mp[val]);
+
     Holiday holiday;
     std::ofstream out("output.txt");
     holiday.happyHolidays(1, out);
     out << "Part 1: " << distance << "\n";
-    out << "Part 2: " << "\n";
+    out << "Part 2: " << similarity << "\n";
     out.close();
 
     return 0;
