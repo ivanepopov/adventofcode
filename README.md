@@ -12,7 +12,7 @@ Here are the daily challenges for Advent of Code 2024:
 * 🎁 Day 2: TBD
 * 🎁 Day 3: TBD
 * ...
-* 🎁 Day 24: TBD
+* 🎁 Day 25: TBD
 
 Each day's puzzle will be released at 00:00 UTC-5 and can be found on the official Advent of Code website.
 
