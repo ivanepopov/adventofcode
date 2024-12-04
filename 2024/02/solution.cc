@@ -76,4 +76,7 @@ int main()
     h.happyHolidays(2, out);
     out << "Part 1: " << calculateSafeReports(reports, safeReports, false) << "\n";
     out << "Part 2: " << calculateSafeReports(reports, safeReports, true) << "\n";
+    out.close();
+
+    return 0;
 }
