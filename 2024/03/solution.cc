@@ -89,6 +89,7 @@ int main ()
     h.happyHolidays(3, out);
     out << "Part 1: " << calculateMults(buffer, length, false) << "\n";
     out << "Part 2: " << calculateMults(buffer, length, true) << "\n";
+    out.close();
 
     return 0;
 }
