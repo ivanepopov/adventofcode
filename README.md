@@ -11,6 +11,7 @@ Here are the daily challenges for Advent of Code 2024:
 * 🎁 Day 1: [challenge](./2024/01/README.md) [solution](./2024/01/solution.cc) ⭐⭐
 * 🎁 Day 2: [challenge](./2024/02/README.md) [solution](./2024/02/solution.cc) ⭐⭐
 * 🎁 Day 3: [challenge](./2024/03/README.md) [solution](./2024/03/solution.cc) ⭐⭐
+* 🎁 Day 4: [challenge](./2024/04/README.md) [solution](./2024/04/solution.cc) ⭐⭐
 * ...
 * 🎁 Day 25: TBD
 
