@@ -18,6 +18,8 @@ Here are the daily challenges for Advent of Code 2024:
 * 🎁 Day 8: [challenge](./2024/08/README.md) [solution](./2024/08/solution.cc) ⭐⭐
 * 🎁 Day 9: [challenge](./2024/09/README.md) [solution](./2024/09/solution.cc) ⭐⭐
 * 🎁 Day 10: [challenge](./2024/10/README.md) [solution](./2024/10/solution.cc) ⭐⭐
+* 🎁 Day 11: [challenge](./2024/11/README.md) [solution](./2024/11/solution.cc) ⭐⭐
+* 🎁 Day 12: [challenge](./2024/12/README.md) [solution](./2024/12/solution.cc) ⭐⭐
 * ...
 * 🎁 Day 25: TBD
 
