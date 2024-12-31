@@ -1,88 +1,102 @@
 #include "../holiday/holiday.h"
 #include <fstream>
-#include <functional>
 #include <iostream>
+#include <set>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
 
-struct connection_2x {
-    std::string c1;
-    std::string c2;
-
-    bool operator==(const connection_2x& c) const {
-        return c1 == c.c1 && c2 == c.c2;
-    }
-};
-
-struct connection_2x_hash {
-    std::size_t operator()(const connection_2x& c) const {
-        std::size_t h1 = std::hash<std::string>()(c.c1);
-        std::size_t h2 = std::hash<std::string>()(c.c2);
-        return h1 ^ (h2 << 1);
-    }
-};
-
-struct connection_3x {
-    std::string c1;
-    std::string c2;
-    std::string c3;
-
-    bool operator==(const connection_3x& other) const {
-        return c1 == other.c1 && c2 == other.c2 && c3 == other.c3;
-    }
-};
-
-struct connection_3x_hash {
-    std::size_t operator()(const connection_3x& c) const {
-        std::size_t h1 = std::hash<std::string>()(c.c1);
-        std::size_t h2 = std::hash<std::string>()(c.c2);
-        std::size_t h3 = std::hash<std::string>()(c.c3);
-        return h1 ^ (h2 << 1) ^ (h3 << 2);
-    }
-};
-
 class Network {
     private:
-       std::unordered_set<connection_2x, connection_2x_hash> connections;
+        std::set<std::set<std::string>> c2x;
+        std::set<std::set<std::string>> c3x;
+        std::set<std::string> pw;
+        std::unordered_map<std::string, std::unordered_set<std::string>> mp;
 
-       std::unordered_set<connection_3x, connection_3x_hash> find3XConnections();
+        void find3XConnections();
+        void findMaxConnection();
+
+        int tryFindHistorian();
+        std::string findPassword();
     public:
         Network(std::string);
-        int tryFindHistorian();
+        void print();
 };
 
 int main()
 {
     Network network("input.txt");
-
-    std::cout << network.tryFindHistorian() << std::endl;
+    network.print();
 }
 
-std::unordered_set<connection_3x, connection_3x_hash> Network::find3XConnections()
+void Network::print()
 {
-    std::unordered_set<connection_3x, connection_3x_hash> c3x;
-    std::unordered_map<std::string, std::unordered_set<std::string>> mp;
+    std::ofstream out("output.txt");
+    Holiday h; h.happyHolidays(23, out);
+    out << "Part 1: " << tryFindHistorian() << std::endl;
+    out << "Part 2: " << findPassword() << std::endl;
+    out.close();
+}
 
-    for (auto& c : connections)
+std::string Network::findPassword()
+{
+    std::string password;
+    for (auto& c : pw) password += (c + ',');
+    password.erase(password.length()-1);
+    return password;
+}
+
+void Network::find3XConnections()
+{
+    for (auto& c2 : c2x)
     {
-        for (auto& pair : mp[c.c1])
-            if (mp[c.c2].find(pair) != mp[c.c2].end())
-                c3x.insert({c.c1, c.c2, pair});
+        auto pc1 = c2.begin();
+        auto pc2 = pc1++;
 
-        mp[c.c1].insert(c.c2);
-        mp[c.c2].insert(c.c1);
+        for (auto& pc3 : mp[*pc1])
+        {
+            if (mp[*pc2].find(pc3) != mp[*pc2].end())
+                c3x.insert({*pc1, *pc2, pc3});
+        }
     }
+}
 
-    return c3x;
+void Network::findMaxConnection()
+{
+    std::set<std::set<std::string>> maxConnection = c3x, curr;
+    bool fail;
+
+    while (true)
+    {
+        curr.clear();
+        for (const auto & conn : maxConnection)
+        {
+            for (const auto& [pc, pcs] : mp)
+            {
+                if (pcs.size() < conn.size()) continue;
+                fail = false;
+
+                for (const auto c_pc : conn)
+                    if (mp[pc].find(c_pc) == mp[pc].end()) { fail = true; break; }
+
+                if (!fail)
+                {
+                    auto newconn = conn;
+                    newconn.insert(pc);
+                    curr.insert(newconn);
+                }
+            }
+        }
+        if (curr.empty()) break;
+        maxConnection = curr;
+    }
+    pw = *maxConnection.begin();
 }
 
 int Network::tryFindHistorian()
 {
-    std::unordered_set<connection_3x, connection_3x_hash> c3x = find3XConnections();
-
     int count = 0;
-    for (auto& c : c3x) if (c.c1[0] == 't' || c.c2[0] == 't' || c.c3[0] == 't') count++;
+    for (auto& c3 : c3x) for (auto& c : c3) if (c[0] == 't') { count++; break; }
     return count;
 }
 
@@ -95,8 +109,14 @@ Network::Network(std::string file)
     {
         c1 = line.substr(0, 2);
         c2 = line.substr(3);
-        connections.insert({c1, c2});
+
+        mp[c1].insert(c2);
+        mp[c2].insert(c1);
+        c2x.insert({c1, c2});
     }
+
+    find3XConnections();
+    findMaxConnection();
 
     in.close();
 }
