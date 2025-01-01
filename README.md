@@ -6,3 +6,5 @@
 Each day's puzzle will be released at 00:00 UTC-5 and can be found on the official Advent of Code website.
 
 **Happy Holidays!**
+
+Welcome 2025!
