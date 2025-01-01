@@ -10,18 +10,24 @@ class Office
         std::vector<std::vector<int>> locks;
         std::vector<std::vector<int>> keys;
 
+        int getUniqueFitCount();
     public:
         Office(std::string);
-        int getUniqueFitCount();
+        void print();
 };
 
 int main()
 {
-    Office test("test.txt");
     Office office("input.txt");
+    office.print();
+}
 
-    std::cout << test.getUniqueFitCount() << std::endl;
-    std::cout << office.getUniqueFitCount() << std::endl;
+void Office::print()
+{
+    std::ofstream out("output.txt");
+    Holiday h; h.happyHolidays(25, out);
+    out << "Part 1: " << getUniqueFitCount() << std::endl;
+    out.close();
 }
 
 int Office::getUniqueFitCount()
